@@ -1,0 +1,27 @@
+.transparent-navbar {
+  background-color: #232222;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.nav-link:hover {
+  color: black !important;
+}
