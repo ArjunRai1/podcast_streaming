@@ -1,32 +1,69 @@
-// routes/audio.js
+const mongoose = require('mongoose');
 const express = require('express');
-const router = express.Router();
-const Audio = require('../models/Audio');
+const audioroute = express.Router();
+const podcastSchema = require('../models/Sample');
 
-router.get("/audio", async (req, res) => {
-  try {
-    const audioList = await Audio.find();
-    res.status(200).json(audioList);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-router.get("/audio/:id", async (req, res) => {
-  try {
-    const audio = await Audio.findById(req.params.id);
-    if (!audio) {
-      return res.status(404).json({ message: 'Audio not found' });
+audioroute.get('/get-audio-list', (req, res) => {
+  podcastSchema.find({}, (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      const audioList = data.map((audio) => ({
+        _id: audio._id,  // Include the _id field
+        name: audio.name,
+        description: audio.description,
+        url: audio.url,
+      }));
+      res.json(audioList);
     }
-
-    // Send the audio buffer as a stream
-    res.set('Content-Type', audio.audioFile.contentType);
-    res.status(200).send(audio.audioFile.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+  });
 });
 
-module.exports = router;
+
+audioroute.post("/create-new", (req, res) => {
+  podcastSchema.create(req.body, (err, data) => {
+    if (err)
+      return err;
+    else
+      res.json(data);
+  })
+})
+
+audioroute.route("/update-podcast/:id")
+  .get((req, res) => {
+    podcastSchema.find(mongoose.Types.ObjectId(req.params.id), (err, data) => {
+      if (err)
+        return err;
+      else
+        res.json(data);
+    })
+  }).put((req, res) => {
+    const receivedId = req.params.id;
+
+    console.log('Received ID:', receivedId);
+    podcastSchema.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id),
+      { $set: req.body },
+      (err, data) => {
+        if (err)
+          return err;
+        else
+          res.json(data);
+      })
+  })
+
+  audioroute.delete("/delete-podcast/:id", (req, res) => {
+    podcastSchema.findByIdAndRemove(mongoose.Types.ObjectId(req.params.id), (err, data) => {
+      if (err)
+        return res.status(500).json({ error: 'Internal Server Error' });
+      else
+        res.json(data);
+    });
+  });
+
+
+
+
+
+
+module.exports = audioroute;

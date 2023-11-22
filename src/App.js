@@ -12,15 +12,13 @@ import Footer from "./components/Footer";
 import Register from "./components/Registrationform";
 import Upload from './components/Upload';
 import AudioPlayer from './components/AudioPlayer';
-import React, {useState} from 'react';
-import AudioList from './components/AudioList';
+import AudioPlayeradmin from './components/AudioPlayeradmin';
+import Delete from './components/Delete';
 
 function App() {
-  const [audioId, setAudioId] = useState(null);
+  
 
-  const handleAudioUpload = (uploadedAudioId) => {
-    setAudioId(uploadedAudioId);
-  };
+  
   return (
     <div>
       <HashRouter>
@@ -33,12 +31,13 @@ function App() {
           <Route path="/admin-landing" element={<AdminLanding />} />
           <Route path="/support" element={<Support />}/>
           <Route path="/register" element={<Register />} />
-          <Route path="/audio" element={<AudioList />} />
-
-
+          <Route path="/create-new" element={<Upload />} />
+          
+          <Route path="/update-podcast" element={<AudioPlayeradmin />} />
+          <Route path="/delete-podcast" element={<Delete />} />
         </Routes>
-        <Upload onUpload={handleAudioUpload} />
-          {audioId && <AudioPlayer audioUrl={`http://localhost:4000/audio/${audioId}`} />}
+        
+     
       </HashRouter>
       <Footer />
     </div>

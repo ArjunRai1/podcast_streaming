@@ -8,8 +8,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 mongoose.set("strictQuery", true);
-app.use('/audio', express.static('uploads'));
-app.use('/audio', audioRoutes);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use('/audioroute', audioRoutes);
 mongoose.connect('mongodb+srv://arjunrai2214:Arjunrai2002@cluster0.42oofbu.mongodb.net/echopulse');
 
 var db = mongoose.connection;

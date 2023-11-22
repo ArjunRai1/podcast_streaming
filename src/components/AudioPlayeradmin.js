@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Axios from 'axios';
-import { FaPlay, FaPause } from 'react-icons/fa';
-import "./AudioPlayer.css";
+import { FaPlay, FaPause, FaTrash, FaEdit } from 'react-icons/fa';
+import AudioForm from './Audioform'; 
+import './AudioPlayer.css';
 
-const AudioPlayer = () => {
+
+const AudioPlayeradmin = () => {
   const [audioList, setAudioList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [volume, setVolume] = useState(0.5); // Initial volume is set to 50%
+  const [volume, setVolume] = useState(0.5);
+  const [selectedAudio, setSelectedAudio] = useState(null); 
   const audioRef = useRef(null);
-  
 
   useEffect(() => {
     // Fetch audio files from the server when the component mounts
@@ -42,17 +44,60 @@ const AudioPlayer = () => {
     audioRef.current.volume = newVolume;
   };
 
+  const handleEdit = (audio) => { 
+    // Set the selected audio for editing
+    setSelectedAudio(audio);
+  };
+  const handleFormSubmit = (editedData) => {
+    // Send a PUT request to update the audio with edited data
+    console.log("Edited data: ", editedData);
+    console.log("Selected Audio ID:", selectedAudio._id);
+    Axios.put(`http://localhost:4000/audioroute/update-podcast/${selectedAudio._id}`, editedData)
+  .then((response) => {
+    console.log("Response:", response);
+    if (response.data) {
+      // Fetch updated audio list after editing
+      Axios.get('http://localhost:4000/audioroute/get-audio-list')
+        .then((response) => {
+          setAudioList(response.data);
+          alert('Audio successfully updated');
+          // Clear the selected audio after editing
+          setSelectedAudio(null);
+        })
+        .catch((error) => console.error('Error fetching audio list:', error));
+    } else {
+      console.error('Error updating audio: Response data is null');
+    }
+  })
+  .catch((error) => console.error('Error updating audio:', error));
+
   
+
+  };
 
   return (
     <div className="audio-player-container">
       <h2>Audio Playlist</h2>
-      <table className="playlist table-striped">
+      <table className="playlist">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Action</th>
+            <th>Play/Pause</th>
+            <th>Volume</th>
+          </tr>
+        </thead>
         <tbody>
           {audioList.map((audio, index) => (
             <tr key={index} className="playlist-item">
               <td>
                 <span className="audio-title">{audio.name}</span>
+              </td>
+              <td>
+                <button className="edit-btn" onClick={() => handleEdit(audio)}>
+                  <FaEdit />
+                </button>
+               
               </td>
               <td>
                 <button className="play-pause-btn" onClick={() => handlePlayPause(audio.url)}>
@@ -79,8 +124,18 @@ const AudioPlayer = () => {
         </tbody>
       </table>
       <audio ref={audioRef} onEnded={() => setIsPlaying(false)} />
+
+      {/* Render the AudioForm component conditionally */}
+      {selectedAudio && (
+        <AudioForm
+          nameValue={selectedAudio.name}
+          descriptionValue={selectedAudio.description}
+          urlValue={selectedAudio.url}
+          getState={handleFormSubmit}
+        />
+      )}
     </div>
   );
 };
 
-export default AudioPlayer;
+export default AudioPlayeradmin;

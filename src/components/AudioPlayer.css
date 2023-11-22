@@ -1,0 +1,63 @@
+/* AudioPlayer.css */
+
+body {
+  background-color: #000; /* Set the overall background color to black */
+  color: #fff; /* Set text color to white */
+}
+
+.audio-player-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.playlist {
+  border-collapse: collapse;
+  width: 80%; /* Adjust the width as needed */
+  margin: 0 auto; /* Center the table */
+  background-color: #000; /* Set table background color to black */
+  color: #fff; /* Set text color inside the table to white */
+}
+
+.playlist-item {
+  border-bottom: 1px solid #ddd; /* Add a border between items */
+}
+
+.audio-title {
+  text-align: left;
+  display: block;
+  padding: 10px;
+}
+
+.play-pause-btn {
+  background-color: #006400; /* Dark green play/pause button */
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 5px; /* Add some spacing between buttons */
+}
+
+.play-pause-btn:hover {
+  background-color: #004d00; /* Darker green on hover */
+}
+
+.volume-control {
+  margin-top: 10px;
+}
+
+.volume-control label {
+  font-size: 12px;
+  color: #888;
+}
+
+.volume-control input {
+  width: 60px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: #f0f0f0; /* Set a light background color for the input */
+  border: 1px solid #ddd; /* Add a border to the input */
+  padding: 5px;
+}
+
+/* Additional styles can be added based on your preferences */

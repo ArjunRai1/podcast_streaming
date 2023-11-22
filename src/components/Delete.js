@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Axios from 'axios';
-import { FaPlay, FaPause } from 'react-icons/fa';
-import "./AudioPlayer.css";
+import { FaPlay, FaPause, FaTrash, FaEdit } from 'react-icons/fa';
+import './AudioPlayer.css';
 
-const AudioPlayer = () => {
+const Delete = () => {
   const [audioList, setAudioList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [volume, setVolume] = useState(0.5); // Initial volume is set to 50%
+  const [volume, setVolume] = useState(0.5);
+  const [selectedAudio, setSelectedAudio] = useState(null); 
   const audioRef = useRef(null);
-  
 
   useEffect(() => {
     // Fetch audio files from the server when the component mounts
@@ -42,17 +42,60 @@ const AudioPlayer = () => {
     audioRef.current.volume = newVolume;
   };
 
+  const handleEdit = (audio) => { 
+    // Set the selected audio for editing
+    setSelectedAudio(audio);
+  };
+  const handleDelete = (audioId) => {
+    // Send a DELETE request to remove the audio
+    Axios.delete(`http://localhost:4000/audioroute/delete-podcast/${audioId}`)
+      .then((response) => {
+        if (response.data) {
+          // Fetch updated audio list after deleting
+          Axios.get('http://localhost:4000/audioroute/get-audio-list')
+            .then((response) => {
+              setAudioList(response.data);
+              alert('Audio successfully deleted');
+            })
+            .catch((error) => console.error('Error fetching audio list:', error));
+        } else {
+          console.error('Error deleting audio: Response data is null');
+        }
+      })
+      .catch((error) => console.error('Error deleting audio:', error));
+  };
+
+
+
+  
+
   
 
   return (
     <div className="audio-player-container">
       <h2>Audio Playlist</h2>
-      <table className="playlist table-striped">
+      <table className="playlist">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Action</th>
+            <th>Play/Pause</th>
+            <th>Volume</th>
+          </tr>
+        </thead>
         <tbody>
           {audioList.map((audio, index) => (
             <tr key={index} className="playlist-item">
               <td>
                 <span className="audio-title">{audio.name}</span>
+              </td>
+              <td>
+                <button className="edit-btn" onClick={() => handleEdit(audio)}>
+                  <FaEdit />
+                </button>
+                <button className="delete-btn" onClick={() => handleDelete(audio._id)}>
+                  <FaTrash />
+                </button>
               </td>
               <td>
                 <button className="play-pause-btn" onClick={() => handlePlayPause(audio.url)}>
@@ -78,9 +121,9 @@ const AudioPlayer = () => {
           ))}
         </tbody>
       </table>
-      <audio ref={audioRef} onEnded={() => setIsPlaying(false)} />
     </div>
   );
+
 };
 
-export default AudioPlayer;
+export default Delete;

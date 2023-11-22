@@ -2,7 +2,6 @@ const express = require("express");
 const registerSchema = require("../models/Register");
 const userRoute = express.Router();
 const mongoose = require("mongoose");
-const Audio = require('../models/Audio');
 
 
 
