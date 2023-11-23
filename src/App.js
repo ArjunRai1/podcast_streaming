@@ -11,7 +11,6 @@ import Support from './components/Support';
 import Footer from "./components/Footer";
 import Register from "./components/Registrationform";
 import Upload from './components/Upload';
-import AudioPlayer from './components/AudioPlayer';
 import AudioPlayeradmin from './components/AudioPlayeradmin';
 import Delete from './components/Delete';
 

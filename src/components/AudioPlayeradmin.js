@@ -14,7 +14,6 @@ const AudioPlayeradmin = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Fetch audio files from the server when the component mounts
     Axios.get('http://localhost:4000/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
@@ -22,7 +21,6 @@ const AudioPlayeradmin = () => {
 
   const handlePlayPause = (audioUrl) => {
     if (audioUrl === currentAudio) {
-      // Toggle play/pause for the current audio
       setIsPlaying(!isPlaying);
       if (isPlaying) {
         audioRef.current.pause();
@@ -30,7 +28,6 @@ const AudioPlayeradmin = () => {
         audioRef.current.play();
       }
     } else {
-      // Play a new audio file
       setCurrentAudio(audioUrl);
       setIsPlaying(true);
       audioRef.current.src = audioUrl;
@@ -45,23 +42,19 @@ const AudioPlayeradmin = () => {
   };
 
   const handleEdit = (audio) => { 
-    // Set the selected audio for editing
     setSelectedAudio(audio);
   };
   const handleFormSubmit = (editedData) => {
-    // Send a PUT request to update the audio with edited data
     console.log("Edited data: ", editedData);
     console.log("Selected Audio ID:", selectedAudio._id);
     Axios.put(`http://localhost:4000/audioroute/update-podcast/${selectedAudio._id}`, editedData)
   .then((response) => {
     console.log("Response:", response);
     if (response.data) {
-      // Fetch updated audio list after editing
       Axios.get('http://localhost:4000/audioroute/get-audio-list')
         .then((response) => {
           setAudioList(response.data);
           alert('Audio successfully updated');
-          // Clear the selected audio after editing
           setSelectedAudio(null);
         })
         .catch((error) => console.error('Error fetching audio list:', error));
@@ -125,7 +118,7 @@ const AudioPlayeradmin = () => {
       </table>
       <audio ref={audioRef} onEnded={() => setIsPlaying(false)} />
 
-      {/* Render the AudioForm component conditionally */}
+      
       {selectedAudio && (
         <AudioForm
           nameValue={selectedAudio.name}

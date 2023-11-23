@@ -12,10 +12,8 @@ function UserLogin() {
     Axios.post('http://localhost:4000/userRoute/user-login', { email, password })
       .then((res) => {
         if (res.status === 200 && res.data.message === "Authentication success") {
-          // Successful login, navigate to the user-landing page
           navigate('/user-landing');
         } else {
-          // Authentication failed, display an alert
           alert('Authentication failed');
         }
       })

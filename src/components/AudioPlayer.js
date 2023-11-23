@@ -7,12 +7,12 @@ const AudioPlayer = () => {
   const [audioList, setAudioList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [volume, setVolume] = useState(0.5); // Initial volume is set to 50%
+  const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
   
 
   useEffect(() => {
-    // Fetch audio files from the server when the component mounts
+  
     Axios.get('http://localhost:4000/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
@@ -20,7 +20,6 @@ const AudioPlayer = () => {
 
   const handlePlayPause = (audioUrl) => {
     if (audioUrl === currentAudio) {
-      // Toggle play/pause for the current audio
       setIsPlaying(!isPlaying);
       if (isPlaying) {
         audioRef.current.pause();
@@ -28,7 +27,6 @@ const AudioPlayer = () => {
         audioRef.current.play();
       }
     } else {
-      // Play a new audio file
       setCurrentAudio(audioUrl);
       setIsPlaying(true);
       audioRef.current.src = audioUrl;

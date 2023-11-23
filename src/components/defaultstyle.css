@@ -35,12 +35,12 @@ background-color: #232222;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  position: relative; /* Required for absolute positioning of child elements */
+  position: relative; 
 }
 .secondhalf img {
     width: 200px;
     height: auto;
-    border-radius: 8px; /* Optional: Add rounded corners for a softer look */
+    border-radius: 8px;
   }
   .secondhalf img:nth-child(2) {
     position: absolute;
@@ -78,7 +78,7 @@ background-color: #232222;
 
 .small-text {
     font-size: 1.2rem;
-    color: #555; /* Gray */
+    color: #555;
 }
 
 .buttons {
@@ -91,13 +91,13 @@ background-color: #232222;
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    background: #4CAF50; /* Green */
+    background: #4CAF50;
     color: white;
     border: none;
 }
 
 .btn:hover, .btn-sm:hover {
-    background: #45a049; /* Darker Green */
+    background: #45a049; 
 }
 
 .favorite-categories-container {
@@ -111,7 +111,7 @@ background-color: #232222;
 }
 
 .category img {
-    max-width: 100%; /* Adjusted to ensure the image doesn't exceed its container */
+    max-width: 100%; 
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

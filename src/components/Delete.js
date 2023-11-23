@@ -12,7 +12,6 @@ const Delete = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // Fetch audio files from the server when the component mounts
     Axios.get('http://localhost:4000/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
@@ -20,7 +19,6 @@ const Delete = () => {
 
   const handlePlayPause = (audioUrl) => {
     if (audioUrl === currentAudio) {
-      // Toggle play/pause for the current audio
       setIsPlaying(!isPlaying);
       if (isPlaying) {
         audioRef.current.pause();
@@ -28,7 +26,6 @@ const Delete = () => {
         audioRef.current.play();
       }
     } else {
-      // Play a new audio file
       setCurrentAudio(audioUrl);
       setIsPlaying(true);
       audioRef.current.src = audioUrl;
@@ -43,15 +40,12 @@ const Delete = () => {
   };
 
   const handleEdit = (audio) => { 
-    // Set the selected audio for editing
     setSelectedAudio(audio);
   };
   const handleDelete = (audioId) => {
-    // Send a DELETE request to remove the audio
     Axios.delete(`http://localhost:4000/audioroute/delete-podcast/${audioId}`)
       .then((response) => {
         if (response.data) {
-          // Fetch updated audio list after deleting
           Axios.get('http://localhost:4000/audioroute/get-audio-list')
             .then((response) => {
               setAudioList(response.data);
