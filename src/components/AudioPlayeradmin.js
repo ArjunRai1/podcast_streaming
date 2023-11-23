@@ -14,7 +14,7 @@ const AudioPlayeradmin = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    Axios.get('http://localhost:4000/audioroute/get-audio-list')
+    Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
   }, []);
@@ -47,11 +47,11 @@ const AudioPlayeradmin = () => {
   const handleFormSubmit = (editedData) => {
     console.log("Edited data: ", editedData);
     console.log("Selected Audio ID:", selectedAudio._id);
-    Axios.put(`http://localhost:4000/audioroute/update-podcast/${selectedAudio._id}`, editedData)
+    Axios.put(`https://podcast-streaming-backend.onrender.com/audioroute/update-podcast/${selectedAudio._id}`, editedData)
   .then((response) => {
     console.log("Response:", response);
     if (response.data) {
-      Axios.get('http://localhost:4000/audioroute/get-audio-list')
+      Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
         .then((response) => {
           setAudioList(response.data);
           alert('Audio successfully updated');

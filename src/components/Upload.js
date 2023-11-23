@@ -10,7 +10,7 @@ function CreateNew()
     
     const handleSubmit = () =>{
         const data = {name:arr[0], description:arr[1], url:arr[2]};
-        Axios.post("http://localhost:4000/audioroute/create-new", data)
+        Axios.post("https://podcast-streaming-backend.onrender.com/audioroute/create-new", data)
         .then((res)=>{
             if(res.status===200)
                 alert("Record added successfully");

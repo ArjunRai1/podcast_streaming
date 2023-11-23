@@ -12,7 +12,7 @@ const Delete = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    Axios.get('http://localhost:4000/audioroute/get-audio-list')
+    Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
   }, []);
@@ -43,10 +43,10 @@ const Delete = () => {
     setSelectedAudio(audio);
   };
   const handleDelete = (audioId) => {
-    Axios.delete(`http://localhost:4000/audioroute/delete-podcast/${audioId}`)
+    Axios.delete(`https://podcast-streaming-backend.onrender.com/audioroute/delete-podcast/${audioId}`)
       .then((response) => {
         if (response.data) {
-          Axios.get('http://localhost:4000/audioroute/get-audio-list')
+          Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
             .then((response) => {
               setAudioList(response.data);
               alert('Audio successfully deleted');

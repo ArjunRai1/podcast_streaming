@@ -13,7 +13,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
   
-    Axios.get('http://localhost:4000/audioroute/get-audio-list')
+    Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
   }, []);
