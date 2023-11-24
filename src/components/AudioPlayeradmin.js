@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Axios from 'axios';
-import { FaPlay, FaPause, FaEdit } from 'react-icons/fa';
+import axios from 'axios';
+import { FaEdit } from 'react-icons/fa';
 import AudioForm from './Audioform';
 import './AudioPlayer.css';
 
@@ -13,26 +13,12 @@ const AudioPlayeradmin = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
+    axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
   }, []);
 
-  const handlePlayPause = (audioUrl) => {
-    if (audioUrl === currentAudio) {
-      setIsPlaying(!isPlaying);
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-    } else {
-      setCurrentAudio(audioUrl);
-      setIsPlaying(true);
-      audioRef.current.src = audioUrl;
-      audioRef.current.play();
-    }
-  };
+ 
 
 
 
@@ -42,11 +28,11 @@ const AudioPlayeradmin = () => {
   const handleFormSubmit = (editedData) => {
     console.log("Edited data: ", editedData);
     console.log("Selected Audio ID:", selectedAudio._id);
-    Axios.put(`https://podcast-streaming-backend.onrender.com/audioroute/update-podcast/${selectedAudio._id}`, editedData)
+    axios.put(`https://podcast-streaming-backend.onrender.com/audioroute/update-podcast/${selectedAudio._id}`, editedData)
       .then((response) => {
         console.log("Response:", response);
         if (response.data) {
-          Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
+          axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
             .then((response) => {
               setAudioList(response.data);
               alert('Audio successfully updated');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import user from "./user.jpg";
-import Axios from 'axios';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function UserLogin() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ function UserLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    Axios.post('https://podcast-streaming-backend.onrender.com/userRoute/user-login', { email, password })
+    axios.post('https://podcast-streaming-backend.onrender.com/userRoute/user-login', { email, password })
       .then((res) => {
         if (res.status === 200 && res.data.message === "Authentication success") {
           navigate('/user-landing');

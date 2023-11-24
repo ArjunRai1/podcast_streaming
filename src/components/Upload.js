@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Audioform from "./Audioform";
-import Axios from "axios";
+import axios from "axios";
 import backgroundImage from "./books.jpg";
 function CreateNew()
 {
@@ -22,7 +22,7 @@ function CreateNew()
       const data = {...formData};
         
       
-        Axios.post("https://podcast-streaming-backend.onrender.com/audioroute/create-new", data)
+        axios.post("https://podcast-streaming-backend.onrender.com/audioroute/create-new", data)
           .then((res) => {
             console.log('Response:', res);
             if (res.status === 200) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Axios from 'axios';
+import axios from 'axios';
 import backgroundImage from "./playback.jpg";
 function Register() {
   const [name, setName] = useState("");
@@ -7,7 +7,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post('https://podcast-streaming-backend.onrender.com/userRoute/register', { name, email, password })
+    axios.post('https://podcast-streaming-backend.onrender.com/userRoute/register', { name, email, password })
       .then(res => {
         if(res.data === "User already exists")
           alert("User already exists");

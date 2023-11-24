@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import "./AudioPlayer.css";
 
@@ -12,7 +12,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
 
-    Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
+    axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
   }, []);

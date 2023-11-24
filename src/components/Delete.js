@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Axios from 'axios';
-import { FaPlay, FaPause, FaTrash } from 'react-icons/fa';
+import axios from 'axios';
+import { FaTrash } from 'react-icons/fa';
 import './AudioPlayer.css';
 
 const Delete = () => {
@@ -11,7 +11,7 @@ const Delete = () => {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
+    axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
   }, []);
@@ -38,10 +38,10 @@ const Delete = () => {
     setSelectedAudio(audio);
   };
   const handleDelete = (audioId) => {
-    Axios.delete(`https://podcast-streaming-backend.onrender.com/audioroute/delete-podcast/${audioId}`)
+    axios.delete(`https://podcast-streaming-backend.onrender.com/audioroute/delete-podcast/${audioId}`)
       .then((response) => {
         if (response.data) {
-          Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
+          axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
             .then((response) => {
               setAudioList(response.data);
               alert('Audio successfully deleted');
