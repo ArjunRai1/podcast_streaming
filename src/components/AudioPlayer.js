@@ -7,12 +7,11 @@ const AudioPlayer = () => {
   const [audioList, setAudioList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
-  
+
 
   useEffect(() => {
-  
+
     Axios.get('https://podcast-streaming-backend.onrender.com/audioroute/get-audio-list')
       .then((response) => setAudioList(response.data))
       .catch((error) => console.error('Error fetching audio list:', error));
@@ -34,13 +33,8 @@ const AudioPlayer = () => {
     }
   };
 
-  const handleVolumeChange = (event) => {
-    const newVolume = event.target.value;
-    setVolume(newVolume);
-    audioRef.current.volume = newVolume;
-  };
 
-  
+
 
   return (
     <div className="audio-player-container">
@@ -57,21 +51,7 @@ const AudioPlayer = () => {
                   {isPlaying && currentAudio === audio.url ? <FaPause /> : <FaPlay />}
                 </button>
               </td>
-              <td>
-                <div className="volume-control">
-                  <label htmlFor={`volume-${index}`}>Volume:</label>
-                  <input
-                    type="range"
-                    id={`volume-${index}`}
-                    name={`volume-${index}`}
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                  />
-                </div>
-              </td>
+
             </tr>
           ))}
         </tbody>

@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Axios from 'axios';
-import { FaPlay, FaPause, FaTrash, FaEdit } from 'react-icons/fa';
+import { FaPlay, FaPause, FaTrash } from 'react-icons/fa';
 import './AudioPlayer.css';
 
 const Delete = () => {
   const [audioList, setAudioList] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [volume, setVolume] = useState(0.5);
   const [selectedAudio, setSelectedAudio] = useState(null); 
   const audioRef = useRef(null);
 
@@ -33,11 +32,7 @@ const Delete = () => {
     }
   };
 
-  const handleVolumeChange = (event) => {
-    const newVolume = event.target.value;
-    setVolume(newVolume);
-    audioRef.current.volume = newVolume;
-  };
+  
 
   const handleEdit = (audio) => { 
     setSelectedAudio(audio);
@@ -73,8 +68,6 @@ const Delete = () => {
           <tr>
             <th>Title</th>
             <th>Action</th>
-            <th>Play/Pause</th>
-            <th>Volume</th>
           </tr>
         </thead>
         <tbody>
@@ -84,33 +77,13 @@ const Delete = () => {
                 <span className="audio-title">{audio.name}</span>
               </td>
               <td>
-                <button className="edit-btn" onClick={() => handleEdit(audio)}>
-                  <FaEdit />
-                </button>
+                
                 <button className="delete-btn" onClick={() => handleDelete(audio._id)}>
                   <FaTrash />
                 </button>
               </td>
-              <td>
-                <button className="play-pause-btn" onClick={() => handlePlayPause(audio.url)}>
-                  {isPlaying && currentAudio === audio.url ? <FaPause /> : <FaPlay />}
-                </button>
-              </td>
-              <td>
-                <div className="volume-control">
-                  <label htmlFor={`volume-${index}`}>Volume:</label>
-                  <input
-                    type="range"
-                    id={`volume-${index}`}
-                    name={`volume-${index}`}
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                  />
-                </div>
-              </td>
+              
+              
             </tr>
           ))}
         </tbody>

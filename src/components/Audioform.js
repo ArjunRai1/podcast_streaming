@@ -7,30 +7,16 @@ function AudioForm(props) {
 
   const handleClick = () => {
     const formData = { name, description, url };
+    console.log('Data in Audioform:', formData);
     props.getState(formData);
   };
 
   return (
     <div style={{ maxWidth: "40%", margin: "0px auto" }}>
-      <input
-        defaultValue={props.nameValue}
-        onChange={(event) => setName(event.target.value)}
-        className="form-control my-3"
-        placeholder="Enter your name"
-      />
-      <input
-        defaultValue={props.descriptionValue}
-        onChange={(event) => setDescription(event.target.value)}
-        className="form-control my-3"
-        placeholder="Enter the description"
-      />
-      <input
-        defaultValue={props.urlValue}
-        onChange={(event) => setUrl(event.target.value)}
-        className="form-control my-3"
-        placeholder="Enter url"
-      />
-      <button onClick={handleClick} className="btn btn-success my-3 d-block mx-auto" type="button">
+      <input value={name} defaultValue={props.nameValue} onChange={(event) => setName(event.target.value)} class="form-control my-3" placeholder="Enter the name" />
+      <input value={description} defaultValue={props.descriptionValue} onChange={(event) => setDescription(event.target.value)} class="form-control my-3" placeholder="Enter the description" />
+      <input value={url} defaultValue={props.urlValue} onChange={(event) => setUrl(event.target.value)} class="form-control my-3" placeholder="Enter url" />
+      <button onClick={handleClick} class="btn btn-success my-3 d-block mx-auto" type="submit">
         Submit
       </button>
     </div>
